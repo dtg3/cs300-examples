@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+    DOCTYPE is important and MUST appear first in your HTML files!
+    This ensures that your browser is aware of what version of HTML it
+    will be rendering. Without this, browsers run in quirks mode which
+    can lead to unexpected behavior.
+-->
+
+<!-- The <html> element indicates the beginning of HTML markup -->
+<html>
+
+    <!-- 
+        The <head> element is used to establish metadata for the page.
+        This is also where you include javascript or CSS.
+    -->
+    <head>
+        <!-- The <meta> element describes the content and text encoding of the page -->
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        
+        <!-- The <title> element sets the brwoser title to the text between the elements -->
+        <title>2D Serpinski Gasket Dots</title>
+        <!-- 
+            The <script> element allows you to load script files from external local files or remote URLs.
+            You can also embed script code directly in between the element without the need for an external source.
+            Script elements can only be used in the <head> or <body> elements.
+                
+            You can think of this like an #include directive in C/C++ or an import in Python.
+
+            The type attribute tells the web browser what type of script to try and execute.
+        -->
+
+        <!-- 
+            Vertex and fragment shader scripts written in GLSL can be embedded directly into the HTML.
+            NOTE: You can load this code from an external file (extension .glsl), but you will need
+            to run a local server to load your webpage. This is do to a security feature of most modern
+            browsers. If you have Python installed, you can start a webserver using the command
+            python -m http.server (on Mac or Linux you might need to use python3 -m http.server)
+            in the root of your WebGL project directory.
+        -->
+        <script id="vertex-shader" type="x-shader/x-vertex">
+            attribute vec4 vPosition;
+            
+            void main() {
+                gl_PointSize = 1.0;
+                gl_Position = vPosition;
+            }
+        </script>
+            
+        <script id="fragment-shader" type="x-shader/x-fragment">
+            precision mediump float;
+            
+            void main() {
+                gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
+            }
+        </script>
+
+        <!-- 
+            The type attribute value "text/javascript" tells the web browser the script will be javascript.
+            While this this particular value is an older part of the HTML standard and has been 
+            replaced by "application/javascript", the "text/javascript" is understood as equivalent
+            by the largest number of browsers and is still recommended by the HTML Living Standards:
+            (https://html.spec.whatwg.org/multipage/scripting.html#scriptingLanguages)
+     
+            The defer and async attributes both allow script files to be downloaded asynchronosly
+            but the execution of the script happens at different times. With async, the script will
+            be executed immediately after download. Defer forces the execution of the script to happpen
+            after the HTML document has been parsed. Since our HTML content is so minimal and only impacts the
+            canvas element, the attributes are provided here simply for example and will have no noticable
+            impact on presentation or page loading times. Older browsers may not support this attribute.
+            
+            Without these attributes, the browser waits until downloading script is complete, executes the script,
+            and then continues parsing the HTML (synchronous). This means that scripts without defer or async are
+            downloaded and processed in the order they appear in the HTML document.
+        -->
+        <!-- webgl-utils.js has utilities to help setup the WebGL canvas -->
+        <script async type="text/javascript" src="../Common/webgl-utils.js"></script>
+        <!-- initShaders.js helps to read, compile, and link the shaders -->
+        <script async type="text/javascript" src="../Common/initShaders.js"></script>
+        <!-- MV.js provides matrix and vector manipulation functions -->
+        <script async type="text/javascript" src="../Common/MV.js"></script>
+
+        <script defer type="text/javascript" src="gasket_dots.js"></script>
+    </head>
+
+    <!--
+        The <body> element contains the content of the page.
+        You can also include <script> elements inside the body to use javascript code.
+    -->
+    <body>
+        <!--
+            The <canvas> element has an API for 2D graphics operations. We will be using the canvas as
+            a container for rendering with WebGL. The id attribute allows us to give a name to the element
+            so it can be referenced later using javascript code.
+        -->
+        <canvas id="gl-canvas" width="512" height="512">
+            <!-- This message only appears if the browser doesn't support HTML 5 -->
+            Sorry, your web browser does not support the HTML 5 canvas element.
+        </canvas>
+    </body>
+
+</html>
