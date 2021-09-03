@@ -13,6 +13,12 @@ window.onload = function init() {
         alert("WebGL not found!");
     }
 
+    /*
+        Color: If we set the verices of a primative
+        (line, triangle, etc.) to be the same the color
+        will be solid. If we use different colors the
+        GPU will blend the colors outward from the vertex.
+    */
     points.push(vec2(-0.5, -0.5));
     colors.push(vec3(1.0, 0.0, 0.0));
     points.push(vec2(-0.5, 0.5));
