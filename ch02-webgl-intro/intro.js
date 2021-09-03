@@ -2,6 +2,7 @@
 
 var gl;
 var points = [];
+var colors = [];
 
 window.onload = function init() {
     var canvas = document.getElementById("gl-canvas");
@@ -12,7 +13,15 @@ window.onload = function init() {
         alert("WebGL not found!");
     }
 
-    points.push(vec2(0,0));
+    points.push(vec2(-0.5, -0.5));
+    colors.push(vec3(1.0, 0.0, 0.0));
+    points.push(vec2(-0.5, 0.5));
+    colors.push(vec3(0.0, 1.0, 0.0));
+    points.push(vec2(0.5, -0.5));
+    colors.push(vec3(0.0, 0.0, 1.0));
+    points.push(vec2(0.5, 0.5));
+    colors.push(vec3(1.0, 1.0, 1.0));
+    
 
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(0, 0, 0 , 1.0);
@@ -28,10 +37,18 @@ window.onload = function init() {
     gl.vertexAttribPointer(vertex_position, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vertex_position);
 
+    var color_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(colors), gl.STATIC_DRAW);
+
+    var vertex_color = gl.getAttribLocation(programs, "vColor");
+    gl.vertexAttribPointer(vertex_color, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vertex_color);
+
     render();
 }
 
 function render() {
     gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.drawArrays(gl.POINTS, 0, points.length);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, points.length);
 }
