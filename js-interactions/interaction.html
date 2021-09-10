@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" context="text/html;charset=utf-8">
+        <title>JS Interactions</title>
+
+        <script type="text/javascript" src="interactions.js"></script>
+    </head>
+
+    <body>
+        <h1>Hello Interactions</h1>
+        <h2 id="displayName"></h2>
+
+        <button onclick=clickMe()>Click Me!</button>
+        <span id="clickResult"></span>
+
+        <div>
+            <label for="nameEntry">What is your name?</label>
+            <input id="nameEntry">
+            <button onclick=showName()>Display Name</button>
+        </div>
+
+        <div>
+            <label>Choose a color:</label>
+            <select name="colors" id="colors">
+                <option value="black">Black</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+            </select>
+        </div>
+
+        <div>
+            <p id="changeColor">You can change the color!</p>
+        </div>
+
+        <div>
+            <p>The moust is at: <span id="coordinates"></span></p>
+        </div>
+    </body>
+
+</html>
