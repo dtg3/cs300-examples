@@ -29,6 +29,17 @@ function rgbValue() {
     document.getElementById("currentBlue").innerHTML = bval;
 }
 
+window.onkeydown = function(event) {
+    //let key = String.fromCharCode(event.keyCode);
+    let key = event.keyCode;
+    document.getElementById("keyboard").innerHTML = key;
+    console.log(key);
+}
+window.onkeyup = function(event) {
+    document.getElementById("keyboard").innerHTML = "";
+}
+
+
 function colorSetting() {
     selectedColor = this.value;
     document.getElementById("changeColor").style.color = selectedColor;
