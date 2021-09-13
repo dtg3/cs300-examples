@@ -13,6 +13,20 @@ window.onload = function init() {
     droplist.addEventListener("change", colorSetting);
 
     window.addEventListener("mousemove", mouseFollow);
+
+    document.getElementById("rVal").addEventListener("change", rgbValue);
+    document.getElementById("gVal").addEventListener("change", rgbValue);
+    document.getElementById("bVal").addEventListener("change", rgbValue);
+}
+
+function rgbValue() {
+    var rval = document.getElementById("rVal").value; 
+    var gval = document.getElementById("gVal").value;
+    var bval = document.getElementById("bVal").value;
+
+    document.getElementById("currentRed").innerHTML = rval;
+    document.getElementById("currentGreen").innerHTML = gval;
+    document.getElementById("currentBlue").innerHTML = bval;
 }
 
 function colorSetting() {
