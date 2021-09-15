@@ -4,6 +4,9 @@
 var gl;
 var points = [];
 var colors = [];
+var point_buffer;
+var xDir = 0.01;
+var yDir = 0.01;
 
 window.onload = function init() {
     var canvas = document.getElementById("gl-canvas");
@@ -23,7 +26,7 @@ window.onload = function init() {
     var program = initShaders(gl, "vertex-shader", "fragment-shader");
     gl.useProgram(program);
 
-    var point_buffer = gl.createBuffer();
+    point_buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, point_buffer);
     gl.bufferData(gl.ARRAY_BUFFER, flatten(points), gl.STATIC_DRAW);
 
@@ -31,7 +34,36 @@ window.onload = function init() {
     gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vPosition);
 
+    update();
+}
+
+function direction() {
+    let value = Math.random() * 1 + 1;
+    return value / 100;
+}
+
+function update() {
     render();
+
+    points[0] = add(points[0], vec2(xDir, yDir));
+
+    if (points[0][0] >= 1) {
+        xDir = -1 * direction();
+    }
+    if (points[0][1] >= 1) {
+        yDir = -1 * direction();
+    }
+    if (points[0][0] <= -1) {
+        xDir = direction();
+    }
+    if (points[0][1] <= -1) {
+        yDir = direction();
+    }
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, point_buffer);
+    gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
+
+    window.requestAnimationFrame(update);
 }
 
 function render() {
