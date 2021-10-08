@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<br>
+<button id = "increaseNear">Increase Near</button>
+<button id = "decreaseNear">Decrease Near</button>
+
+<button id = "increaseFar">Increase Far</button>
+<button id = "decreaseFar">Decrease Far</button>
+<br>
+
+<button id = "increaseRadius">Increase Radius</button>
+<button id = "decreaseRadius">Decrease Radius</button>
+<button id = "increaseFOV">Increase FOV</button>
+<button id = "decreaseFOV">Decrease FOV</button>
+<br>
+<button id = "Increase Theta">Increase Theta</button>
+<button id = "Decrease Theta">Decrease Theta</button>
+<button id = "Increase Phi">Increase Phi</button>
+<button id = "Decrease Phi">Decrease Phi</button>
+<br>
+
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+varying vec4 fColor;
+
+uniform mat4 modelView;
+uniform mat4 projection;
+
+void main() 
+{
+    gl_Position = projection * modelView * vPosition;
+    fColor = vColor;
+} 
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+precision mediump float;
+
+varying vec4 fColor;
+
+void
+main()
+{
+    gl_FragColor = fColor;
+}
+</script>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="perspective-cubes.js"></script>
+
+<body>
+<canvas id="gl-canvas" width="512" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+
+</body>
+</html>
