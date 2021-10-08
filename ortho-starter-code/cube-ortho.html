@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+varying vec4 fColor;
+
+uniform mat4 modelView;
+uniform mat4 projection;
+
+void main() 
+{
+    gl_Position = projection * modelView * vPosition;
+    fColor = vColor;
+} 
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+precision mediump float;
+
+varying vec4 fColor;
+
+void
+main()
+{
+    gl_FragColor = fColor;
+}
+</script>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="cube-ortho.js"></script>
+
+<body>
+<canvas id="gl-canvas" width="512" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+
+<br><br>
+<p>Alter View Volume: <span id="viewVolume"></span></p>
+<button id = "increaseNear">Increase Near</button>
+<button id = "decreaseNear">Decrease Near</button>
+<br>
+<button id = "increaseFar">Increase Far</button>
+<button id = "decreaseFar">Decrease Far</button>
+<br>
+<button id = "increaseLeft">Increase Left</button>
+<button id = "decreaseLeft">Decrease Left</button>
+<br>
+<button id = "increaseRight">Increase Right</button>
+<button id = "decreaseRight">Decrease Right</button>
+<br>
+<button id = "increaseTop">Increase Top</button>
+<button id = "decreaseTop">Decrease Top</button>
+<br>
+<button id = "increaseBottom">Increase Bottom</button>
+<button id = "decreaseBottom">Decrease Bottom</button>
+
+<br><br>
+<p>Alter Camera Position: <span id="eyePos"></span></p>
+<button id = "moveCameraUp">Camera Up</button>
+<button id = "moveCameraDown">Camera Down</button>
+<br>
+<button id = "moveCameraLeft">Camera Left</button>
+<button id = "moveCameraRight">Camera Right</button>
+<br>
+<button id = "decreaseRadius">Zoom In</button>
+<button id = "increaseRadius">Zoom Out</button>
+</body>
+</html>
