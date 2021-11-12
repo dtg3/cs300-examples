@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     private Transform cameraTransform;
     [SerializeField] private float speed = 6f;
     [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float gravityValue = -9.8f;
+    private Vector3 playerGravity;
     private PlayerInput input;
     private Vector3 direction;
     private InputAction move;
@@ -32,7 +34,15 @@ public class PlayerController : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         transform.rotation = Quaternion.Lerp(transform.rotation,
-            targetRotation, rotationSpeed); 
+            targetRotation, rotationSpeed);
+
+        if (controller.isGrounded) {
+            playerGravity.y = 0f;
+        }
+        else {
+            playerGravity.y += gravityValue * Time.deltaTime;
+            controller.Move(playerGravity * Time.deltaTime);
+        }
         
         controller.Move(direction * speed * Time.deltaTime);
     }
