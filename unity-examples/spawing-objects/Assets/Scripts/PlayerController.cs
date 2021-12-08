@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private InputAction move;
     private InputAction mouseMove;
     private Vector3 direction;
+    [SerializeField] private GameObject bullet;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,13 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         move = input.actions["Move"];
         mouseMove = input.actions["Look"];
+    }
+
+    void OnShoot()
+    {
+        GameObject weapon = GameObject.FindGameObjectWithTag("Weapon");
+        GameObject obj = Instantiate(bullet, 
+            weapon.transform.position, transform.rotation) as GameObject;
     }
 
     // Update is called once per frame
@@ -31,5 +39,13 @@ public class PlayerController : MonoBehaviour
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
         transform.LookAt(new Vector3(worldPos.x,
             transform.position.y, worldPos.z));
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

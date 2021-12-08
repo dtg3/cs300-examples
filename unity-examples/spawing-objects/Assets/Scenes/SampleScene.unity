@@ -788,6 +788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
+  bullet: {fileID: 6054326410909797863, guid: b0b0ad5827b694dfc9d9bfe1ac8c7e3f, type: 3}
 --- !u!114 &1537746537
 MonoBehaviour:
   m_ObjectHideFlags: 0
