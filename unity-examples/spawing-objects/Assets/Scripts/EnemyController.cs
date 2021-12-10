@@ -18,26 +18,29 @@ public class EnemyController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {  
-        if (controller.isGrounded && enemyVerticalVelocity.y < 0)
+    {   
+        if (player && player.activeInHierarchy)
         {
-            enemyVerticalVelocity.y = 0.0f;
+            if (controller.isGrounded && enemyVerticalVelocity.y < 0)
+            {
+                enemyVerticalVelocity.y = 0.0f;
+            }
+
+            Vector3 direction = (player.transform.position -
+                transform.position).normalized;
+            transform.LookAt(player.transform.position);
+            controller.Move(direction * speed * Time.deltaTime);
+
+            enemyVerticalVelocity.y += gravityValue * Time.deltaTime;
+            controller.Move(enemyVerticalVelocity * Time.deltaTime);
         }
-
-        Vector3 direction = (player.transform.position -
-            transform.position).normalized;
-        transform.LookAt(player.transform.position);
-        controller.Move(direction * speed * Time.deltaTime);
-
-        enemyVerticalVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(enemyVerticalVelocity * Time.deltaTime);
     }
 
     void OnControllerColliderHit(ControllerColliderHit other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
     }
 }

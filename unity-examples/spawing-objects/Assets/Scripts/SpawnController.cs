@@ -1,22 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnController : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] private GameObject enemy;
+    [SerializeField] private GameObject player;
     [SerializeField] private float spawnTime = 0.4f;
-    [SerializeField] private float spawnDelay = 0.1f;
     void Start()
     {
-        InvokeRepeating("Spawn", spawnTime, spawnDelay);
+        player = GameObject.FindGameObjectWithTag("Player");
+        StartCoroutine(SpawnRoutine());
     }
 
-    private void Spawn()
+    IEnumerator SpawnRoutine()
     {
-        Vector3 spawnPos = transform.position;
-        spawnPos.y += 2.0f;
-        Instantiate(enemy, spawnPos, Quaternion.identity);
+        while (player.activeInHierarchy)
+        {
+            yield return new WaitForSeconds(spawnTime);
+            Vector3 spawnPos = transform.position;
+            spawnPos.y += 2f;
+            Instantiate(enemy, spawnPos, Quaternion.identity);
+        }
     }
 }
